@@ -1,0 +1,19 @@
+{
+  "name": "wu-axios",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && node ./dist/index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "whatwg-fetch": "^2.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^10.3.3",
+    "typescript": "^2.9.2"
+  }
+}
