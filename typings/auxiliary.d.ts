@@ -3,3 +3,18 @@ declare type Decorator = (target?:any, property?: string, description?:any) => v
 declare var wx: any;
 
 declare type Adapter = (config:any)=>any;
+
+
+declare interface ResponseData {
+  data: any;
+  status: number;
+  statusText: string;
+  headers: ParseHeader | null;
+  config: any;
+  request: XMLHttpRequest;
+}
+
+
+declare interface ParseHeader {
+  [key:string]: any;
+}
