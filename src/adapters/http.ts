@@ -55,7 +55,7 @@ const httpAdapter: Adapter = function (config: any) {
     if (auth) {
       delete headers.Authorization;
     }
-    const isHttps = protocol === 'https:';
+    const isHttps:boolean = protocol === 'https:';
   //  todo
   })
 }
