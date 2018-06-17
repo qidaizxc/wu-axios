@@ -18,3 +18,6 @@ declare interface ResponseData {
 declare interface ParseHeader {
   [key:string]: any;
 }
+
+
+declare module 'follow-redirects';

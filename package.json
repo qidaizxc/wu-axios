@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "whatwg-fetch": "^2.0.4"
+    "follow-redirects": "^1.5.0",
+    "is-buffer": "^2.0.3"
   },
   "devDependencies": {
     "@types/node": "^10.3.3",
