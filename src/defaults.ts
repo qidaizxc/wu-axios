@@ -1,3 +1,5 @@
+import xhr from "./adapters/xhr";
+
 // 根据环境获取当前请求方法
 function getDefaultAdapter():Adapter {
   let adapter: Adapter = (config: any) => {return config};
@@ -8,10 +10,12 @@ function getDefaultAdapter():Adapter {
 
   // ajax请求
   } else if(typeof XMLHttpRequest !== 'undefined'){
-
+    adapter = xhr;
   // 微信请求
   }else if(typeof wx !== 'undefined' && wx.request){
 
   }
   return adapter;
 }
+
+export default getDefaultAdapter;

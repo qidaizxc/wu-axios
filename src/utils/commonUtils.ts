@@ -4,6 +4,18 @@ type callback = (value?:any,index?: string | number)=>void;
 const toString = Object.prototype.toString;
 
 
+export function isNumber(val:any) {
+  return typeof val === 'number';
+}
+
+export function isString(val: any):boolean {
+  return typeof val === 'string';
+}
+
+export function isArrayBuffer(val: any) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
 export function isObject(val: any):boolean {
   return val !== null && typeof val === 'object';
 }
@@ -33,8 +45,18 @@ export function isFormData(val: any): boolean {
 }
 
 // 匹配一个空白字符，包括空格、制表符、换页符和换行符。
-export function trim(str: string):string {
+export function trimStr(str: string):string {
   return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+export function isStandardBrowserEnv(): boolean {
+  if(typeof navigator !== 'undefined' && navigator.product === 'ReactNative'){
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
 }
 
 export function forEach(obj:any,fn:callback):void {

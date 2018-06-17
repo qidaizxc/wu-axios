@@ -1,4 +1,4 @@
-import {forEach} from "./commonUtils";
+import {forEach, trimStr} from "./commonUtils";
 
 const ignoreDuplicateOf:string[] = [
   'age', 'authorization', 'content-length', 'content-type', 'etag',
@@ -14,8 +14,8 @@ export default function parseHeaders(headers: string): ParseHeader {
   }
   forEach(headers.split('\n'), function (line: string) {
     const i = line.indexOf(':'),
-      key:string = line.substr(0, i).trim().toLowerCase(),
-      val = line.substr(i + 1).trim();
+      key:string = trimStr(line.substr(0, i)).toLowerCase(),
+      val = trimStr(line.substr(i + 1));
     if(key){
       if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
         return;

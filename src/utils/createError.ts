@@ -6,7 +6,8 @@ export function enhanceError(error:any, config:any, code:any, request:any, respo
     response,
   });
 }
-// todo
-export default function createError() {
 
+export default function createError(message:string, config: any, code: any, request: any, response: ResponseData | null) {
+  const error:Error = new Error(message);
+  return enhanceError(error, config, code, request, response);
 }
