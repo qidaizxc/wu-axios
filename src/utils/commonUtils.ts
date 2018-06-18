@@ -81,3 +81,36 @@ export function forEach(obj:any,fn:callback):void {
     }
   }
 }
+
+/**
+ * 深度复制、合并 函数 只深复制了object
+ * @param objs
+ */
+export function deepMerge(...objs:any[]) {
+  const result:any = {};
+  objs.forEach(function (obj: any) {
+    forEach(obj, function (val:any, key:any) {
+      if (typeof result[key] === 'object' && typeof val === 'object') {
+        result[key] = deepMerge(result[key], val);
+      } else if (typeof val === 'object') {
+        result[key] = deepMerge({}, val);
+      } else {
+        result[key] = val;
+      }
+    })
+  })
+}
+
+export function merge(...objs: any[]) {
+  const result:any = {};
+  objs.forEach(function (obj: any) {
+    forEach(obj, function (val: any, key: any) {
+      if (typeof result[key] === 'object' && typeof val === 'object') {
+        result[key] = merge(result[key], val);
+      } else {
+        result[key] = val;
+      }
+    })
+  });
+  return result;
+}

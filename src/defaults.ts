@@ -1,5 +1,6 @@
 import xhr from "./adapters/xhr";
 import http from './adapters/http';
+import fetchAdapter from "./adapters/fetch";
 // 根据环境获取当前请求方法
 function getDefaultAdapter():Adapter {
   let adapter: Adapter = (config: any) => {return config};
@@ -8,7 +9,7 @@ function getDefaultAdapter():Adapter {
     adapter = http;
     // fetch 请求
   }else if(typeof window !== 'undefined' && typeof window.fetch !== 'undefined'){
-
+    adapter = fetchAdapter;
   // ajax请求
   } else if(typeof XMLHttpRequest !== 'undefined'){
     adapter = xhr;
@@ -19,4 +20,10 @@ function getDefaultAdapter():Adapter {
   return adapter;
 }
 
-export default getDefaultAdapter;
+const defaults:any = {
+  adapter: getDefaultAdapter(),
+
+};
+
+
+export default defaults;

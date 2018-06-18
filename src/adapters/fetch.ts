@@ -2,6 +2,7 @@ import {isFormData} from "../utils/commonUtils";
 import btoa from "../utils/btoa";
 import buildURL from "../utils/buildURL";
 import createError from "../utils/createError";
+import settle from "../utils/settle";
 
 const isSupportAbortController: boolean = typeof AbortController !== 'undefined';
 /**
@@ -57,8 +58,14 @@ export default function fetchAdapter(config: any) {
     }
     fetch(url, initObj)
       .then((response: Response) => {
-        // todo 对返回数据格式化 根据responseType
-
+        const responseType:string = config.responseType;
+        let data:any;
+        if((responseType in response) && typeof (<any>response)[responseType] === 'function'){
+          data = (<any>response)[responseType]();
+        }else {
+          data = response.json()
+        }
+        settle(resolve, reject, formatResponse(data, config))
       }).catch(e => {
       reject(createError(e, config, 'FETCHERROR', null))
     })
@@ -93,6 +100,18 @@ function createInitData(config: any, requestData: any, requestHeaders: any): Req
     initData.mode = config.fetchMode;
   }
   return initData;
+}
+
+function formatResponse(response: any, config:any): ResponseData {
+  const {body, headers, statusText, status} = response;
+  return {
+    data: body,
+    status,
+    statusText,
+    headers,
+    config,
+    request: null,
+  }
 }
 
 /** 手动实现progress todo

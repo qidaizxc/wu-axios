@@ -11,7 +11,7 @@ declare interface ResponseData {
   statusText: string;
   headers: ParseHeader | null;
   config: any;
-  request: XMLHttpRequest;
+  request: XMLHttpRequest | null;
 }
 
 
