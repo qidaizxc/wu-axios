@@ -27,11 +27,13 @@ const httpAdapter: Adapter = function (config: any) {
     if (!headers['User-Agent'] && !headers['user-agent']) {
       headers['User-Agent'] = 'wu-axios/' + '1.0.0';
     }
-    // 将数据格式化为buffer
+    // 将不是stream的数据格式化为buffer
     if (data && !isStream(data)) {
+      // buffer是我们需要的格式 不需要操作
       if (Buffer.isBuffer(data)) {
 
       } else if (isArrayBuffer(data)) {
+        // arrayBuffer格式化未buffer
         data = new Buffer(new Uint8Array(data));
       } else if (isString(data)) {
         data = new Buffer(data, 'utf-8');
@@ -74,12 +76,18 @@ const httpAdapter: Adapter = function (config: any) {
       auth,
       agent,
     };
+    /**
+     * socket
+     */
     if (config.socketPath) {
       options.socketPath = config.socketPath
     } else {
       options.hostname = parsed.hostname;
       options.port = parsed.port;
     }
+    /**
+     * proxy 设置
+     */
     let proxy = config.proxy;
     if (!proxy && proxy !== false) {
       const proxyEnv: string = protocol.slice(0, -1) + '_proxy';
@@ -99,7 +107,7 @@ const httpAdapter: Adapter = function (config: any) {
         }
       }
     }
-
+    // 代理实际操作
     if (proxy) {
       options.hostname = proxy.host;
       options.host = proxy.host;
@@ -112,6 +120,9 @@ const httpAdapter: Adapter = function (config: any) {
       }
     }
     let transport: any;
+    /**
+     * 请求发送操作
+     */
     if(config.transport){
       transport = config.transport;
     }else if(config.maxRedirects){
@@ -220,7 +231,7 @@ function createReqListener(
     reject(enhanceError(err, config, null, req));
   });
 
-  // 超时
+  // 超时 调用原生abort方法
   if (config.timeout) {
     timer = setTimeout(function handleRequestTimeout() {
       req.abort();

@@ -24,6 +24,11 @@ export function isFunction(val: any):boolean {
   return toString.call(val) === '[object Function]';
 }
 
+/**
+ * 有pipe方法
+ * @param val
+ * @returns {boolean}
+ */
 export function isStream(val: any):boolean {
   return isObject(val) && isFunction(val.pipe);
 }

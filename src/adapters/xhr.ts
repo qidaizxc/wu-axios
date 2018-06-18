@@ -35,8 +35,7 @@ export default (function xhrAdapter(config: any) {
     if(isStandardBrowserEnv()){
       const cookies = cookiesUtil();
       const xsrfValue: string | null = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-        cookies.read(config.xsrfCookieName) :
-        null;
+        cookies.read(config.xsrfCookieName) : null;
       if (xsrfValue) {
         requestHeaders[config.xsrfHeaderName] = xsrfValue;
       }
