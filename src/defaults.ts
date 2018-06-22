@@ -20,6 +20,7 @@ function getDefaultAdapter():Adapter {
   return adapter;
 }
 // todo
+
 const defaults:any = {
   adapter: getDefaultAdapter(),
 

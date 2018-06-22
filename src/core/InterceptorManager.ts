@@ -5,7 +5,17 @@ export interface Handler {
   rejected?: Function,
 }
 
-export default class InterceptorManager {
+interface Interceptor {
+  // 注册拦截器
+  use: (fulfilled: Function, rejected?: Function) => number;
+  // 销毁拦截器
+  eject: (id: number) => void;
+  // 遍历拦截器
+  forEach: (fn: Function) => void;
+}
+
+export default class InterceptorManager implements Interceptor {
+  // 储存注册的拦截器
   private handlers: Array<null | Handler> = [];
 
   /**
@@ -14,7 +24,7 @@ export default class InterceptorManager {
    * @param {Function} rejected
    * @returns {number}
    */
-  use(fulfilled: Function, rejected?: Function): number{
+  use(fulfilled: Function, rejected?: Function): number {
     this.handlers.push({rejected, fulfilled});
     return this.handlers.length - 1;
   }
@@ -23,14 +33,15 @@ export default class InterceptorManager {
    * 取消处理 用use函数返回的id
    * @param {number} id
    */
-  eject(id: number){
-    if(this.handlers[id]){
+  eject(id: number): void {
+    if (this.handlers[id]) {
       this.handlers[id] = null;
     }
   }
-  forEach(fn: Function){
+
+  forEach(fn: Function) {
     forEach(this.handlers, function (h) {
-      if(h !== null){
+      if (h !== null) {
         fn(h);
       }
     })

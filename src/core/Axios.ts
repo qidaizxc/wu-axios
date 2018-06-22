@@ -1,8 +1,8 @@
-// 不需要data参数
 import InterceptorManager, {Handler} from "./InterceptorManager";
 import mergeConfig from "./mergeConfig";
 import dispatchRequest from "./dispatchRequest";
 
+// 不需要data参数
 const methods: string[] = ['delete', 'get', 'head', 'options'];
 // 需要data参数
 const methodsWithData:string[] = ['post', 'put', 'patch'];
@@ -33,7 +33,9 @@ export interface Interceptors {
 
 
 interface RequestBase {
+  // 核心请求函数 所有快捷请求其实都是走的这个函数
   request:(url: string | any, _config?: any)=> Promise<any>;
+  // 拦截器 包括请求、响应两个方面
   interceptors: Interceptors;
 }
 
@@ -54,7 +56,7 @@ class Axios implements RequestBase{
 
   /**
    * ```js
-   *  request(url, config)、request(config) 两种都可以
+   *  axios.request(url, config)、request(config) 两种都可以
    * ```
    * @param url
    * @param _config
