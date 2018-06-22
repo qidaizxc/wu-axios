@@ -63,11 +63,13 @@ class Axios implements RequestBase{
    */
   public request(url: string | any, _config?: any): Promise<any> {
     let config:any;
+    // 此处复制一下配置 免得修改原对象
     if(typeof url === 'string'){
       config = {..._config, url};
     }else {
       config = {...url};
     }
+    // 合并选项
     config = mergeConfig(this.defaults, config);
     let promise: Promise<any> = Promise.resolve(config);
     const chain: Array<any> = [dispatchRequest,undefined];

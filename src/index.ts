@@ -1,4 +1,3 @@
-/*
-import Axios from "./core/Axios";
+import axios from './axios';
 
-export default Axios;*/
+export default axios;

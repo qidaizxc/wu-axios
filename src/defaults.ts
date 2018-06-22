@@ -14,7 +14,7 @@ function getDefaultAdapter():Adapter {
   } else if(typeof XMLHttpRequest !== 'undefined'){
     adapter = xhr;
   // 微信请求
-  }else if(typeof wx !== 'undefined' && wx.request){
+  }else if(typeof wx !== 'undefined' && typeof wx.request === 'function'){
 
   }
   return adapter;
