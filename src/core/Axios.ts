@@ -32,16 +32,24 @@ export interface Interceptors {
 }
 
 
-class Axios {
+interface RequestBase {
+  request:(url: string | any, _config?: any)=> Promise<any>;
+  interceptors: Interceptors;
+}
+
+
+class Axios implements RequestBase{
   // 初始化config
   private defaults: AxiosConfig;
   // 加载 请求、响应 处理器
-  public interceptors:Interceptors = {
-    request: new InterceptorManager(),
-    response: new InterceptorManager(),
-  };
+  public interceptors:Interceptors;
+
   constructor(instanceConfig: AxiosConfig){
     this.defaults = instanceConfig;
+    this.interceptors = {
+      request: new InterceptorManager(),
+      response: new InterceptorManager(),
+    };
   }
 
   /**
